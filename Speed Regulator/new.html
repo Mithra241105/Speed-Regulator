@@ -1,0 +1,331 @@
+<html>
+ <head>
+  <title>
+   Vehicle Regulation System
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="icon" href="road.jpg" type="image/png">
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+        }
+  </style>
+  <script>
+   function enterSpeedZone() {
+            const zones = [
+                { name: "Residential Zone", speedLimit: { car: [20, 30], truck: [15, 25], motorcycle: [20, 30] }, hornStatus: "Not Allowed" },
+                { name: "School Zone", speedLimit: { car: [20, 30], truck: [15, 25], motorcycle: [20, 30] }, hornStatus: "Not Allowed" },
+                { name: "Hospital Zone", speedLimit: { car: [30], truck: [25], motorcycle: [30] }, hornStatus: "Not Allowed" },
+                { name: "Construction Zone", speedLimit: { car: [30, 40], truck: [25, 35], motorcycle: [30, 40] }, hornStatus: "Limited" },
+                { name: "Parks and Recreational Area", speedLimit: { car: [20, 30], truck: [15, 25], motorcycle: [20, 30] }, hornStatus: "Not Allowed" },
+                { name: "Business District", speedLimit: { car: [30, 40], truck: [25, 35], motorcycle: [30, 40] }, hornStatus: "Limited" },
+                { name: "Pedestrian Zone", speedLimit: { car: [5, 10], truck: [5, 10], motorcycle: [5, 10] }, hornStatus: "Not Allowed" },
+                { name: "Highway Zone", speedLimit: { car: [80, 120], truck: [70, 100], motorcycle: [80, 120] }, hornStatus: "Allowed" },
+                { name: "Environmental Protection Zone", speedLimit: { car: [30, 50], truck: [25, 45], motorcycle: [30, 50] }, hornStatus: "Not Allowed" },
+                { name: "Tourist Area", speedLimit: { car: [30, 40], truck: [25, 35], motorcycle: [30, 40] }, hornStatus: "Limited" },
+                { name: "Emergency Vehicle Zone", speedLimit: { car: [30, 40], truck: [25, 35], motorcycle: [30, 40] }, hornStatus: "Allowed" },
+                { name: "Bike Lane and Shared Road", speedLimit: { car: [20, 30], truck: [15, 25], motorcycle: [20, 30] }, hornStatus: "Limited" }
+            ];
+
+            const vehicles = [
+                { type: "Car", icon: "fas fa-car" },
+                { type: "Truck", icon: "fas fa-truck" },
+                { type: "Motorcycle", icon: "fas fa-motorcycle" }
+            ];
+
+            const randomZoneIndex = Math.floor(Math.random() * zones.length);
+            const randomVehicleIndex = Math.floor(Math.random() * vehicles.length);
+
+            const selectedZone = zones[randomZoneIndex];
+            const selectedVehicle = vehicles[randomVehicleIndex];
+            const speedLimit = selectedZone.speedLimit[selectedVehicle.type.toLowerCase()][Math.floor(Math.random() * selectedZone.speedLimit[selectedVehicle.type.toLowerCase()].length)];
+            const hornStatus = selectedZone.hornStatus;
+
+            document.getElementById('currentZone').innerText = selectedZone.name;
+            document.getElementById('speedLimit').innerText = speedLimit + " km/h";
+            document.getElementById('hornStatus').innerText = hornStatus;
+            document.getElementById('vehicleType').innerHTML = `<i class="${selectedVehicle.icon} text-3xl text-blue-500 mr-2"></i> ${selectedVehicle.type}`;
+        }
+
+        function exitSpeedZone() {
+            document.getElementById('currentZone').innerText = "None";
+            document.getElementById('speedLimit').innerText = "N/A km/h";
+            document.getElementById('hornStatus').innerText = "Allowed";
+            document.getElementById('vehicleType').innerHTML = `<i class="fas fa-car text-3xl text-blue-500 mr-2"></i> Car`;
+        }
+
+        function detectEmergencyVehicle() {
+            const isEmergencyVehicle = Math.random() < 0.5; // 50% chance
+            document.getElementById('emergencyStatus').innerText = isEmergencyVehicle ? "Emergency Vehicle Detected" : "No Emergency Vehicle";
+            document.getElementById('emergencyIcon').className = isEmergencyVehicle ? "fas fa-ambulance text-3xl text-red-500 mr-2" : "fas fa-car text-3xl text-blue-500 mr-2";
+        }
+  </script>
+ </head>
+ <body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+  <div class="bg-white p-8 rounded shadow-md text-center mb-8 text-gray-800 border-4 border-blue-500 w-11/12 md:w-3/4 lg:w-2/3">
+   <h1 class="text-4xl font-bold mb-4">
+    Vehicle Regulation System
+   </h1>
+   <h2 class="text-2xl font-semibold mb-4">
+    Description
+   </h2>
+   <p class="text-lg mb-4 text-left">
+    The Vehicle Regulation System is designed to enhance road safety and compliance with traffic regulations. Each vehicle is equipped with a frequency receiving sensor, while roads are fitted with frequency senders for different zones. When a vehicle enters a specific zone, such as a speed zone or no horn zone, the system sends the relevant frequency to the vehicle. This ensures that the vehicle adheres to the speed limit and horn regulations of the zone.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🚦 Real-Time Traffic Updates:
+    </strong>
+    This feature provides users with live information about traffic conditions, including congestion, accidents, and road closures. By integrating real-time data, drivers can make informed decisions about their routes, helping them avoid delays and reach their destinations more efficiently.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📍 Geofencing Alerts:
+    </strong>
+    Geofencing allows the system to create virtual boundaries that trigger alerts when a vehicle enters or exits designated areas. This is particularly useful for monitoring vehicle movements in sensitive locations, such as schools or parks, ensuring compliance with specific regulations in those zones.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🚗 Driver Behavior Monitoring:
+    </strong>
+    This feature tracks and analyzes driver behavior, including instances of speeding, harsh braking, and rapid acceleration. By providing feedback on driving habits, the system encourages safer driving practices, ultimately reducing the risk of accidents and improving overall road safety.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🚑 Emergency Vehicle Detection:
+    </strong>
+    The system can detect the presence of emergency vehicles, such as ambulances, fire trucks, and police cars. When an emergency vehicle is detected, the system can adjust traffic signals or send alerts to drivers, ensuring the safe and timely passage of these vehicles through traffic.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🗺️ Integration with Navigation Apps:
+    </strong>
+    By integrating with popular navigation applications like Google Maps or Waze, the system can provide users with real-time speed limit and noise zone information directly within their navigation experience. This seamless integration enhances user convenience and ensures compliance with local regulations.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     👤 User Profiles and Customization:
+    </strong>
+    Users can create personalized profiles that allow them to customize alerts, preferred routes, and vehicle settings. This feature enhances the user experience by tailoring the system to individual preferences and driving habits, making it more user-friendly.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📊 Historical Data Analysis:
+    </strong>
+    This feature provides users with access to historical data regarding their driving patterns, including speed compliance and noise levels. By analyzing this data, users can gain insights into their driving habits and identify areas for improvement, promoting safer driving.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📢 Community Reporting Feature:
+    </strong>
+    The community reporting feature enables users to report issues such as potholes, road hazards, or traffic violations directly through the app. This engagement fosters a sense of community responsibility and helps local authorities address infrastructure problems more effectively.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🔔 In-App Notifications and Reminders:
+    </strong>
+    The system can send users notifications for upcoming vehicle maintenance, inspections, or reminders about local traffic regulations. These timely alerts help users stay informed and compliant with necessary vehicle upkeep and legal requirements.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🏙️ Integration with Smart City Infrastructure:
+    </strong>
+    By connecting with smart city systems, the vehicle regulation system can share and receive data on traffic patterns, road conditions, and environmental factors. This integration contributes to broader urban planning and traffic management efforts, enhancing overall city efficiency.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🔊 Noise Level Monitoring:
+    </strong>
+    This feature utilizes sensors to monitor noise levels in specific zones and provides feedback to drivers if they exceed acceptable limits. By promoting awareness of noise pollution, the system helps maintain a peaceful environment in noise-sensitive areas.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     🚛 Vehicle Type Recognition:
+    </strong>
+    The system can differentiate between various vehicle types, such as cars, trucks, and motorcycles, allowing for tailored regulations based on vehicle characteristics. This ensures that speed limits and other regulations are appropriate for the specific type of vehicle on the road.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📚 User Education and Resources:
+    </strong>
+    Providing educational resources about safe driving practices, local traffic laws, and environmental impact is essential for promoting responsible driving behavior. This feature increases awareness and empowers users to make informed decisions while driving.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     ⭐ Feedback and Rating System:
+    </strong>
+    The feedback and rating system allows users to provide input on the effectiveness of the vehicle regulation system and rate their experience. This valuable feedback helps improve the system based on user suggestions and enhances overall user satisfaction.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📡 Integration with Vehicle Telematics:
+    </strong>
+    By connecting with vehicle telematics systems, the vehicle regulation system can gather data on vehicle performance, fuel efficiency, and maintenance needs. This comprehensive view of vehicle health enables users to monitor and optimize their vehicle's performance effectively.
+   </p>
+   <p class="text-lg mb-4 text-left">
+    <strong>
+     📞 Emergency Contact Feature:
+    </strong>
+    This feature allows users to set up emergency contacts that can be notified in case of an accident or emergency. By ensuring that help can be quickly summoned, this feature enhances the safety and security of drivers and passengers.
+   </p>
+  </div>
+  <div class="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 mb-8 w-11/12 md:w-3/4 lg:w-2/3">
+   <div class="w-full md:w-1/3 flex items-center justify-center">
+    <img alt="A detailed illustration of a vehicle regulation system in action, showing various zones and vehicle types." class="rounded shadow-md" height="400" src="new.jpg" width="300"/>
+   </div>
+   <div class="bg-white p-8 rounded shadow-md text-center text-gray-800 border-4 border-blue-500 w-full md:w-2/3">
+    <h2 class="text-2xl font-semibold mb-4">
+     Zone Information
+    </h2>
+    <div class="flex flex-col items-center">
+     <div class="flex items-center mb-4">
+      <i class="fas fa-map-marker-alt text-3xl text-blue-500 mr-2">
+      </i>
+      <p class="text-lg">
+       Current Zone:
+       <span class="font-semibold" id="currentZone">
+        None
+       </span>
+      </p>
+     </div>
+     <div class="flex items-center mb-4">
+      <i class="fas fa-tachometer-alt text-3xl text-blue-500 mr-2">
+      </i>
+      <p class="text-lg">
+       Speed Limit:
+       <span class="font-semibold" id="speedLimit">
+        N/A km/h
+       </span>
+      </p>
+     </div>
+     <div class="flex items-center mb-4">
+      <i class="fas fa-bullhorn text-3xl text-blue-500 mr-2">
+      </i>
+      <p class="text-lg">
+       Horn Status:
+       <span class="font-semibold" id="hornStatus">
+        Allowed
+       </span>
+      </p>
+     </div>
+     <div class="flex items-center mb-4">
+      <p class="text-lg">
+       Vehicle Type:
+       <span class="font-semibold" id="vehicleType">
+        <i class="fas fa-car text-3xl text-blue-500 mr-2">
+        </i>
+        Car
+       </span>
+      </p>
+     </div>
+    </div>
+    <div class="space-x-4">
+     <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="enterSpeedZone()">
+      Enter Speed Zone
+     </button>
+     <button class="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-500" onclick="exitSpeedZone()">
+      Exit Speed Zone
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="bg-white p-8 rounded shadow-md text-center text-gray-800 border-4 border-red-500 w-11/12 md:w-3/4 lg:w-2/3 mt-8">
+    <h2 class="text-2xl font-semibold mb-4">
+        Emergency Vehicle Detection
+    </h2>
+    <div class="flex flex-col items-center mb-4">
+        <div class="flex items-center mb-2">
+            <i class="fas fa-car text-3xl text-blue-500 mr-2" id="emergencyIcon"></i>
+            <p class="text-lg" id="emergencyStatus">No Emergency Vehicle</p>
+        </div>
+        <div id="emergencyDetails" class="text-lg hidden">
+            <p class="font-semibold">Emergency Vehicle Type: <span id="emergencyVehicleType">Ambulance</span></p>
+            <p class="font-semibold">Distance: <span id="emergencyDistance">200 meters</span></p>
+        </div>
+    </div>
+    <div class="space-x-4">
+        <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700" onclick="detectEmergencyVehicle()">
+            Detect Emergency Vehicle
+        </button>
+    </div>
+    <div class="mt-4">
+        <p class="text-sm text-gray-600">Press the button to check for emergency vehicles nearby. The system will alert you if any are detected.</p>
+    </div>
+</div>
+  <div class="bg-white p-8 rounded shadow-md text-center text-gray-800 border-4 border-green-500 w-11/12 md:w-3/4 lg:w-2/3 mt-8">
+   <h2 class="text-2xl font-semibold mb-4">
+    Historical Data of Driving Patterns
+   </h2>
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="p-4 border-2 border-green-500 rounded">
+     <h3 class="text-xl font-semibold mb-2">
+      Driver 1
+     </h3>
+     <p class="text-lg mb-2">
+      Speed Compliance:
+      <span class="text-green-500">
+       Low
+      </span>
+     </p>
+     <div class="w-full h-4 bg-green-500 rounded mb-4">
+     </div>
+    </div>
+    <div class="p-4 border-2 border-yellow-500 rounded">
+     <h3 class="text-xl font-semibold mb-2">
+      Driver 2
+     </h3>
+     <p class="text-lg mb-2">
+      Speed Compliance:
+      <span class="text-yellow-500">
+       Mid
+      </span>
+     </p>
+     <div class="w-full h-4 bg-yellow-500 rounded mb-4">
+     </div>
+    </div>
+    <div class="p-4 border-2 border-red-500 rounded">
+     <h3 class="text-xl font-semibold mb-2">
+      Driver 3
+     </h3>
+     <p class="text-lg mb-2">
+      Speed Compliance:
+      <span class="text-red-500">
+       Violated
+      </span>
+     </p>
+     <div class="w-full h-4 bg-red-500 rounded mb-4">
+     </div>
+    </div>
+    <div class="p-4 border-2 border-green-500 rounded">
+     <h3 class="text-xl font-semibold mb-2">
+      Driver 4
+     </h3>
+     <p class="text-lg mb-2">
+      Speed Compliance:
+      <span class="text-green-500">
+       Low
+      </span>
+     </p>
+     <div class="w-full h-4 bg-green-500 rounded mb-4">
+     </div>
+    </div>
+    <div class="p-4 border-2 border-yellow-500 rounded">
+     <h3 class="text-xl font-semibold mb-2">
+      Driver 5
+     </h3>
+     <p class="text-lg mb-2">
+      Speed Compliance:
+      <span class="text-yellow-500">
+       Mid
+      </span>
+     </p>
+     <div class="w-full h-4 bg-yellow-500 rounded mb-4">
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
